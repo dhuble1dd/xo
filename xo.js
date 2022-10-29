@@ -1,7 +1,7 @@
-var cell = document.querySelectorAll('.cell');
+const cell = document.querySelectorAll('.cell');
 
-var player = 'X';
-var winPos = [
+let player = 'X';
+let winPos = [
     [1,2,3],
     [4,5,6],
     [7,8,9],
@@ -12,13 +12,13 @@ var winPos = [
     [3,5,7]
 ]
 
-for (var i = 0; i < cell.length; i++) {
+for (let i = 0; i < cell.length; i++) {
     cell[i].addEventListener('click', cellClick, false)
 }
 
 function cellClick() {
 
-    var data = [];
+    let data = [];
 
     if(!this.innerHTML) {
         this.innerHTML = player;
@@ -27,17 +27,19 @@ function cellClick() {
         return;
     }
 
-    for(var i in cell){
+    for(let i in cell){
         if(cell[i].innerHTML == player){
             data.push(parseInt(cell[i].getAttribute('pos')));
         }
     }
 
     if (checkWin(data)) {
-        restart('Победа игрока ' + player);
+        if (player == 'X') {
+            restart('Победа первого игрока!!!');
+        } else {restart('Победа второго игрока!!!') }
     } else {
-        var draw = true;
-        for (var i in cell) {
+        let draw = true;
+        for (let i in cell) {
             if(cell[i].innerHTML == '') {
                 draw = false;
             }
@@ -52,11 +54,11 @@ function cellClick() {
 }
 
 function checkWin(data) {
-    for (var i in winPos) {
-        var win = true;
-        for (var j in winPos[i]) {
-            var id = winPos[i][j];
-            var ind = data.indexOf(id);
+    for (let i in winPos) {
+        let win = true;
+        for (let j in winPos[i]) {
+            let id = winPos[i][j];
+            let ind = data.indexOf(id);
 
             if (ind == -1) {
                 win = false
@@ -72,7 +74,8 @@ function checkWin(data) {
 
 function restart(text) {
     alert(text);
-    for (var i = 0; i < cell.length; i++) {
+    for (let i = 0; i < cell.length; i++) {
         cell[i].innerHTML = '';
+        player = 'O';
     }
 }
